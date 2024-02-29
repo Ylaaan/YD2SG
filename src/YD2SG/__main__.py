@@ -1,51 +1,22 @@
-import datetime
-from jinja2 import Environment, PackageLoader, select_autoescape
+import sys
+import os
+from jinja2 import Environment, FileSystemLoader, select_autoescape
+from YD2SG.timestamping import get_week_date, generate_timestamp
+from YD2SG.check_input import get_int_input
+from YD2SG.print_utils import print_banner
+
+
 
 # Variables
+version="0.0.5"
 yes_aliases = ["yes","Yes","YES","y","Y"]
 no_aliases = ["no","No","NO","n","N"]
 exit_aliases = ["exit","Exit","EXIT","quit","Quit","QUIT"]
+dirname = os.path.dirname(__file__)
+filename = os.path.join(dirname, 'templates')
 
-version="0.0.1"
-current_time=datetime.datetime.now()
 
-# Functions
-
-# Make sure input is an integer
-def get_int_input(input_message):
-    input_int = ""
-    while input_int == "":
-        try :
-            input_int = int(input(input_message))
-            return input_int
-        except:
-            print("ERROR: Input must be an integer.")
-    
-# Returns a list element with the datetime of a day of the selected week
-def get_week_date(week_number_offset, target_day_number):
-    startdate = datetime.datetime.fromisocalendar(current_time.year, current_time.isocalendar().week + week_number_offset, 1)
-    dates = []
-    for i in range(7):
-        day = startdate + datetime.timedelta(days=i)
-        dates.append(day)
-    return dates[target_day_number]
-
-# Generates an epoch timespamp (in seconds), takes in a date + hours + minutes
-def generate_timestamp(week,day,hour,minute):
-    stream_start_time = datetime.timedelta(hours=hour,minutes=minute)
-    stream_start_full_time = get_week_date(week, day) + stream_start_time
-    stream_start_full_time_timestamp_in_seconds = int(stream_start_full_time.timestamp())
-    return stream_start_full_time_timestamp_in_seconds
-
-# Prints banners
-def print_banner(message):
-    print()
-    print("=============================================================")
-    print(message)
-    print("=============================================================")
-    print()
-
-def YD2SG():
+def main():
     # Logic
     print_banner("Welcome to Ylaan's Discord Schedule Generator v"+version)
     week = get_int_input("What week schedule do you want to generate? (0=This week; 1=Next week; etc...)\n")
@@ -78,7 +49,7 @@ def YD2SG():
 
     # generates the schedule from the template
     env = Environment(
-        loader=PackageLoader("YD2SG"),
+        loader=FileSystemLoader(filename),
         autoescape=select_autoescape()
     )
     template = env.get_template("schedule_template.j2")
@@ -108,9 +79,11 @@ def YD2SG():
         game_sunday=games[6]
     ))
 
-    print_banner("Thank you for using YDSG.")
+    print_banner("Thank you for using YD2SG.")
 
     exit_input = ""
     while exit_input not in exit_aliases:
         exit_input = input("Type exit or quit to close the program.\n")
-    exit(0)
+    sys.exit(0)
+
+main()

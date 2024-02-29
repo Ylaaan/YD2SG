@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "YD2SG"
-version = "0.0.1"
+version = "0.0.5"
 authors = [
   { name="Ylaan", email="watsoncholmes@gmail.com" },
 ]
@@ -12,7 +12,6 @@ description = "Ylaan's Discord Streaming Schedule Generator"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "datetime",
     "jinja2"
 ]
 classifiers = [
@@ -25,7 +24,7 @@ keywords = ["Ylaan", "Schedule", "Discord", "Template"]
 
 
 [project.scripts]
-spam-cli = "spam:YD2SG"
+YD2SG = "YD2SG.__main__:main"
 
 
 [project.urls]
