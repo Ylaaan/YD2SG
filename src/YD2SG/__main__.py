@@ -18,7 +18,7 @@ filename = os.path.join(dirname, 'templates')
 
 def main():
     # Logic
-    print_banner("Welcome to Ylaan's Discord Schedule Generator v"+version)
+    print_banner("Welcome to Ylaan's Discord Streaming Schedule Generator v"+version)
     week = get_int_input("What week schedule do you want to generate? (0=This week; 1=Next week; etc...)\n")
     message_of_the_week = input("What is the message of the week? (This message will appear on top of the schedule.)\n")
 
