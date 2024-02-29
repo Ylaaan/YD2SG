@@ -8,7 +8,7 @@
 
 ## Installing YD2SG
 
-You need python 3.12 or higher to install this package. You can so so with the following command:
+You need python 3.12 or higher to install this package. You can do so with the following command:
 
 ```bash
 pip install YD2SG
